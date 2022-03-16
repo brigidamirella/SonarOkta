@@ -55,7 +55,7 @@
             </tr>
           </thead>
 
-          <tbody v-for="busca in id_user" :key="busca">
+          <tbody v-for="busca in user" :key="busca">
             <tr>
               <td
                 class="text-blueGray-700 whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-left align-middle text-xs"
@@ -71,7 +71,7 @@
               <td
                 class="align-center whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs"
               >
-                <i class="fas fa-arrow-up mr-4 text-blue-500"></i>
+                <b class="fas fa-arrow-up mr-4 text-blue-500"></b>
                 {{ busca.volume }}
               </td>
               <td
@@ -117,13 +117,66 @@
                           </button>
                         </div>
                         <!--body-->
-                        <div class="relative p-6 flex-auto">
-                          <p
-                            class="my-4 text-blueGray-500 text-lg leading-relaxed"
-                          >
-                            Escolha suas ações
-                          </p>
-                        </div>
+                         <div class="p-6 space-y-6">
+              <thead >
+                <tr class="text-gray-900">
+                  Name:
+                  {{
+                    stock_name
+                  }}
+                </tr>
+                <tr class="text-gray-900">
+                  Symbol:
+                  {{
+                    stock_symbol
+                  }}
+                </tr>
+                <tr class="text-gray-900">
+                  id:
+                  {{
+                    id
+                  }}
+                </tr>
+              </thead>
+              <thead>
+                <tr>
+                  
+                  
+                  <br />
+                  Volume Order:
+                  <input
+                    v-model="volume"
+                    placeholder=" vol"
+                    style="
+                      width: 54px;
+                      background-color: #bfdbfe;
+                      border-width: 2;
+                    "
+                    type="number"
+                    step="1"
+                    min="1"
+                    class="border border-slate-300"
+                  />
+                  <label for=""></label>
+                  <br />
+                  Price: R$
+                  <input
+                    class="border"
+                    v-model="price"
+                    placeholder=" price"
+                    style="
+                      width: 74px;
+                      background-color: #bfdbfe;
+                      border-width: 2;
+                    "
+                    type="number"
+                    step="1"
+                    min="1"
+                  />
+                  <label for=""></label>
+                </tr>
+              </thead>
+            </div>
                         <!--footer-->
                         <div
                           class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b"
@@ -137,6 +190,7 @@
                             Close
                           </button>
                           <button
+                          @click="postOrders"
                             id="buttonModal"
                             class="rounded bg-blue-900 py-2 px-4 font-bold text-white hover:bg-blue-700 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
@@ -168,13 +222,21 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      id_user: 0,
+      user: 0,
       showModal: true,
+       stock_name: "",
+      stock_symbol: "",
+      id: "",
+      volume: "",
+      price: "",
+      picked: "",
+      id_user: 1,
     };
   },
   created() {
     this.buscaBalances();
     this.toggleModal();
+     
   },
   methods: {
     async toggleModal() {
@@ -196,15 +258,48 @@ export default {
             busca.updated_on = busca.updated_on.split("T")[0];
             busca.created_on = busca.created_on.split("T")[0];
           }
-          this.id_user = response.data;
+          this.user = response.data;
           console.log("olha pra baixo");
-          console.log(this.id_user);
+          console.log(this.user);
         } catch (error) {
-          this.id_user = `${error}`;
+          this.ser = `${error}`;
         }
       }
     },
-  },
+  }, async postOrders() {
+      const body = {
+        id_user: this.id_user,
+        id_stock: this.id,
+        price: this.price,
+        status: 2,
+        stock_name: this.stock_name,
+        stock_symbol: this.stock_symbol,
+        type: this.picked,
+        volume: this.volume,
+      };
+      try {
+        var now = new Date();
+
+        const response = await axios.post(
+         "http://localhost:8082/orders/add",
+          body,
+          {
+            headers: { Authorization: "Bearer " + this.$auth.getAccessToken() },
+          }
+        );
+        window.alert("Order added with success! \n\n" + now);
+        this.openModal = !this.openModal;
+        console.log(response);
+        console.log(body);
+      } catch (error) {
+        window.alert(error.response.data.message + "\n\n" + now);
+        this.openModal = !this.openModal;
+        console.log(error.response.data.message);
+        console.log(body);
+      }
+    },
+  
+
 };
 </script>
 

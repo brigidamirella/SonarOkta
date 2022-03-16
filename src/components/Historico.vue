@@ -90,7 +90,7 @@
               <td
                 class="align-center whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs"
               >
-                <i class="fas fa-arrow-up mr-4 text-emerald-500"></i>
+                <b class="fas fa-arrow-up mr-4 text-emerald-500"></b>
                 {{ listar.price }}
               </td>
               <td
