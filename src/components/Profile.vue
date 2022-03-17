@@ -1,175 +1,216 @@
 <template>
   <div id="profile" class="flex flex-col">
     <!---->
-    <div id="profile" class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <div
-          class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"
-        >
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
-                >
-                  Stock symbol
-                </th>
-                <th
-                  scope="col"
-                  class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
-                >
-                  Stock name
-                </th>
-                <th
-                  scope="col"
-                  class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
-                >
-                  Data/hora
-                </th>
-                <th
-                  scope="col"
-                  class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
-                >
-                  askmin
-                </th>
-                <th
-                  scope="col"
-                  class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
-                >
-                  askmax
-                </th>
-                <th
-                  scope="col"
-                  class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
-                >
-                  bidmin
-                </th>
-                <th
-                  scope="col"
-                  class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
-                >
-                  bidmax
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="divide-y divide-gray-200 bg-white"
-              v-for="acao in stocks"
-              :key="acao"
-            >
-              <td
-                id="symbol"
-                class="whitespace-nowrap px-6 py-4 text-sm text-gray-900"
+    <div v-if="toggleModal" id="defaultModal" aria-hidden="true">
+      <div id="profile" class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div
+            class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"
+          >
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
+                  >
+                    Stock symbol
+                  </th>
+                  <th
+                    scope="col"
+                    class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
+                  >
+                    Stock name
+                  </th>
+                  <th
+                    scope="col"
+                    class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
+                  >
+                    Data/hora
+                  </th>
+                  <th
+                    scope="col"
+                    class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
+                  >
+                    askmin
+                  </th>
+                  <th
+                    scope="col"
+                    class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
+                  >
+                    askmax
+                  </th>
+                  <th
+                    scope="col"
+                    class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
+                  >
+                    bidmin
+                  </th>
+                  <th
+                    scope="col"
+                    class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
+                  >
+                    bidmax
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="divide-y divide-gray-200 bg-white"
+                v-for="acao in stocks"
+                :key="acao"
               >
-                {{ acao.stock_name }}
-              </td>
-              <td
-                id="symbol"
-                class="whitespace-nowrap px-6 py-4 text-sm text-gray-900"
-              >
-                {{ acao.stock_symbol }}
-              </td>
-              <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                {{ acao.updated_on }}
-              </td>
+                <td
+                  id="symbol"
+                  class="whitespace-nowrap px-6 py-4 text-sm text-gray-900"
+                >
+                  {{ acao.stock_name }}
+                </td>
+                <td
+                  id="symbol"
+                  class="whitespace-nowrap px-6 py-4 text-sm text-gray-900"
+                >
+                  {{ acao.stock_symbol }}
+                </td>
+                <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+                  {{ acao.updated_on }}
+                </td>
 
-              <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                {{ acao.ask_min }}
-              </td>
+                <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+                  {{ acao.ask_min }}
+                </td>
 
-              <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                {{ acao.ask_max }}
-              </td>
-              <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                {{ acao.bid_min }}
-              </td>
-              <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                {{ acao.bid_max }}
-              </td>
+                <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+                  {{ acao.ask_max }}
+                </td>
+                <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+                  {{ acao.bid_min }}
+                </td>
+                <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+                  {{ acao.bid_max }}
+                </td>
 
-              <!-- <td class="whitespace-nowrap px-6 py-4">
+                <!-- <td class="whitespace-nowrap px-6 py-4">
                 <span
                   class="inline-flex rounded-full bg-purple-100 px-2 text-xs font-semibold leading-5 text-green-800"
                 >
                   Active
                 </span>
               </td> -->
-              <td class="whitespace-nowrap px-6 py-4">
-                <div>
-                  <button
-                    class="rounded bg-blue-900 py-2 px-4 font-bold text-white hover:bg-blue-700"
-                    type="button"
-                    v-on:click="toggleModal()"
-                  >
-                    COMPRAR
-                  </button>
-                  <div
-                    v-if="showModal"
-                    class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
-                  >
-                    <div class="relative w-auto my-6 mx-auto max-w-6xl">
-                      <!--content-->
-                      <div
-                        class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
-                      >
-                        <!--header-->
+                <td>
+                  <div>
+                    <button
+                      class="rounded bg-blue-900 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      @click="toggleModal(id, stock_name, stock_symbol)"
+                    >
+                      COMPRAR
+                    </button>
+                  </div>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <div>
+                    <div
+                      v-if="showModal"
+                      class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
+                    >
+                      <div class="relative w-auto my-6 mx-auto max-w-6xl">
+                        <!--content-->
                         <div
-                          class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t"
+                          class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
                         >
-                          <h3 class="text-3xl font-semibold">COMPRAR AÇÕES</h3>
-                          <button
-                            class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                            v-on:click="toggleModal()"
+                          <!--header-->
+                          <div
+                            class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t"
                           >
-                            <span
-                              class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none"
+                            <h3 class="text-3xl font-semibold">
+                              COMPRAR AÇÕES
+                            </h3>
+                          </div>
+                          <!--body-->
+
+                          <div class="p-6 space-y-6">
+                            <thead>
+                              <tr class="text-gray-900">
+                                Name:
+                                {{
+                                  stock_name
+                                }}
+                              </tr>
+                              <tr class="text-gray-900">
+                                Symbol:
+                                {{
+                                  stock_symbol
+                                }}
+                              </tr>
+                              <tr class="text-gray-900">
+                                id:
+                                {{
+                                  id
+                                }}
+                              </tr>
+                            </thead>
+                            <thead>
+                              <tr>
+                                <br />
+                                Volume Order:
+                                <input
+                                  v-model="volume"
+                                  placeholder=" vol"
+                                  style="width: 70px; margin-left: 5px"
+                                  type="number"
+                                  step="1"
+                                  min="1"
+                                  class="border border-slate-300"
+                                />
+                                <label for=""></label>
+                                <br />
+                                Price: R$
+                                <input
+                                  type="text"
+                                  min="0.00"
+                                  max="10000.00"
+                                  step="0.01"
+                                  style="width: 120px; margin-left: 5px"
+                                  name="number" pattern="([0-9]{1,3}).([0-9]{1,3})" placeholder="$5.000.00">
+                                />
+                                <label for=""></label>
+                              </tr>
+                            </thead>
+                          </div>
+                          <!--footer-->
+                          <div
+                            class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b"
+                          >
+                            <button
+                              v-on:click="toggleModal()"
+                              id="buttonModal"
+                              class="text-black-500 bg-transparent border border-solid border-blue-900 hover:bg-blue-700 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                              type="button"
                             >
-                              ×
-                            </span>
-                          </button>
-                        </div>
-                        <!--body-->
-                        <div class="relative p-6 flex-auto">
-                          <p
-                            class="my-4 text-blueGray-500 text-lg leading-relaxed"
-                          >
-                            Escolha suas ações
-                          </p>
-                        </div>
-                        <!--footer-->
-                        <div
-                          class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b"
-                        >
-                          <button
-                            id="buttonModal"
-                            class="text-black-500 bg-transparent border border-solid border-blue-900 hover:bg-blue-700 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                            v-on:click="toggleModal()"
-                          >
-                            Close
-                          </button>
-                          <button
-                            id="buttonModal"
-                            class="rounded bg-blue-900 py-2 px-4 font-bold text-white hover:bg-blue-700 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                            @click="comprar"
-                            v-on:click="toggleModal()"
-                          >
-                            SALVAR
-                          </button>
+                              Close
+                            </button>
+                            <button
+                              id="buttonModal"
+                              class="rounded bg-blue-900 py-2 px-4 font-bold text-white hover:bg-blue-700 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                              type="button"
+                              @click="comprar"
+                              v-on:click="toggleModal()"
+                            >
+                              SALVAR
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
+                    <div
+                      v-if="showModal"
+                      class="opacity-25 fixed inset-0 z-40 bg-PINK"
+                    ></div>
                   </div>
-                  <div
-                    v-if="showModal"
-                    class="opacity-25 fixed inset-0 z-40 bg-PINK"
-                  ></div>
-                </div>
-              </td>
-            </tbody>
-          </table>
+                </td>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -200,6 +241,11 @@ export default {
       posts: [],
       showModal: true,
       connection: null,
+      stock_name: "",
+      stock_symbol: "",
+      id: "",
+      volume: "",
+      price: "",
       // received_messages: [],
       // send_message: null,
       // connected: false
@@ -210,9 +256,14 @@ export default {
     this.toggleModal();
   },
   methods: {
-    async toggleModal() {
+    async toggleModal(id, nome, symbol) {
       this.showModal = !this.showModal;
+      this.stock_name = nome;
+      this.stock_symbol = symbol;
+      this.id = id;
+      console.log(id, nome, symbol);
     },
+    
     async setup() {
       if (this.$root.authenticated) {
         console.log(this.claims);
@@ -234,12 +285,6 @@ export default {
       }
     },
   },
-  createPost() {
-    axios
-      .post("http://localhost:8082/orders/add/", this.posts)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
-  },
 
   WebSocket() {
     console.log("Starting connection to WebSocket Server");
@@ -253,9 +298,9 @@ export default {
       console.log(event);
       console.log("Successfully connected to the echo websocket server...");
     };
-  }
-}
-
+  },
+  
+};
 
 // send() {
 //     console.log("Send message:" + this.send_message);

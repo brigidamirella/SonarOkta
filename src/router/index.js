@@ -5,6 +5,7 @@ import LoginComponent from "@/components/Login";
 import ProfileComponent from "@/components/Profile";
 import HistoricoComponent from "@/components/Historico";
 //  import WalletComponent from '@/components/Wallet'
+import AcoesComponent from "@/components/Acoes";
 import OrdersComponent from '@/components/Orders'
 const router = createRouter({
   history: createWebHistory(),
@@ -28,10 +29,10 @@ const router = createRouter({
       path: "/historico",
       component: HistoricoComponent,
     },
-    // {
-    //   path: '/wallet',
-    //   component: WalletComponent
-    // },
+    {
+      path: '/acoes',
+      component: AcoesComponent
+    },
     {
       path: '/orders',
       component: OrdersComponent

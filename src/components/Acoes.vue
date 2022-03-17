@@ -9,13 +9,9 @@
     href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
   />
 
-  <div
-    class="mx-auto mb-12 mt-24 w-full px-4 xl:mb-0 xl:w-8/12"
-    style="width: 800px; margin-top: -8px; margin-left: 1093px"
-  >
+  <div class="mx-auto mb-12 mt-24 w-full px-4 xl:mb-0 xl:w-8/12">
     <div
       class="relative mb-6 flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg"
-      style="height: 510px"
     >
       <div class="mb-0 rounded-t border-0 px-4 py-3">
         <div class="flex flex-wrap items-center">
@@ -71,7 +67,7 @@
               <td
                 class="align-center whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs"
               >
-                <strong class="fas fa-arrow-up mr-4 text-blue-500"></strong>
+                <b class="fas fa-arrow-up mr-4 text-blue-500"></b>
                 {{ busca.volume }}
               </td>
               <td
@@ -117,58 +113,50 @@
                           </button>
                         </div>
                         <!--body-->
-                         <div class="p-6 space-y-6">
-              <thead  v-for="acao in stocks"
-              :key="acao" >
-                <tr class="text-gray-900">
-                  Name:
-                  {{
-                    acao.stock_name
-                  }}
-                </tr>
-                <tr class="text-gray-900">
-                  Symbol:
-                  {{
-                    acao.stock_symbol
-                  }}
-                </tr>
-              </thead>
-              <thead>
-                <tr>
-                <br />
-                  Volume Order:
-                  <input
-                    v-model="volume"
-                    placeholder=" vol"
-                    style="
-                      width: 70px;
-                    margin-left: 5px;
-                      
-                    "
-                    type="number"
-                    step="1"
-                    min="1"
-                    class="border border-slate-300"
-                  />
-                  <label for=""></label>
-                  <br />
-                  Price: R$
-                  <input
-                    class="border"
-                    v-model="price"
-                    placeholder=" price"
-                    style="
-                      width: 120px;
-                      margin-left: 5px;
-                    "
-                    type="number"
-                    step="1"
-                    min="1"
-                  />
-                  <label for=""></label>
-                </tr>
-              </thead>
-            </div>
+                        <div class="p-6 space-y-6">
+                          <thead>
+                            <tr class="text-gray-900">
+                              Name:
+                              {{
+                                stock_name
+                              }}
+                            </tr>
+                            <tr class="text-gray-900">
+                              Symbol:
+                              {{
+                                stock_symbol
+                              }}
+                            </tr>
+                          </thead>
+                          <thead>
+                            <tr>
+                              <br />
+                              Volume Order:
+                              <input
+                                v-model="volume"
+                                placeholder=" vol"
+                                style="width: 70px; margin-left: 5px"
+                                type="number"
+                                step="1"
+                                min="1"
+                                class="border border-slate-300"
+                              />
+                              <label for=""></label>
+                              <br />
+                              Price: R$
+                              <input
+                                class="border"
+                                v-model="price"
+                                placeholder=" price"
+                                style="width: 120px; margin-left: 5px"
+                                type="number"
+                                step="1"
+                                min="1"
+                              />
+                              <label for=""></label>
+                            </tr>
+                          </thead>
+                        </div>
                         <!--footer-->
                         <div
                           class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b"
@@ -182,7 +170,7 @@
                             Close
                           </button>
                           <button
-                          @click="postOrders"
+                            @click="postOrders"
                             id="buttonModal"
                             class="rounded bg-blue-900 py-2 px-4 font-bold text-white hover:bg-blue-700 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
@@ -214,9 +202,10 @@ import axios from "axios";
 export default {
   data: function () {
     return {
+      
       user: 0,
       showModal: true,
-       stock_name: "",
+      stock_name: "",
       stock_symbol: "",
       id: "",
       volume: "",
@@ -228,8 +217,7 @@ export default {
   created() {
     this.buscaBalances();
     this.toggleModal();
-  
-     
+   
   },
   methods: {
     async toggleModal() {
@@ -259,41 +247,39 @@ export default {
         }
       }
     },
-  }, async postOrders() {
-      const body = {
-        id_user: this.id_user,
-        id_stock: this.id,
-        price: this.price,
-        status: 2,
-        stock_name: this.stock_name,
-        stock_symbol: this.stock_symbol,
-        type: this.picked,
-        volume: this.volume,
-      };
-      try {
-        var now = new Date();
+  },
+  async postOrders() {
+    const body = {
+      id_user: this.id_user,
+      id_stock: this.id,
+      price: this.price,
+      status: 2,
+      stock_name: this.stock_name,
+      stock_symbol: this.stock_symbol,
+      type: this.picked,
+      volume: this.volume,
+    };
+    try {
+      var now = new Date();
 
-        const response = await axios.post(
-         "http://localhost:8082/orders/add",
-          body,
-          {
-            headers: { Authorization: "Bearer " + this.$auth.getAccessToken() },
-          }
-        );
-        window.alert("Order added with success! \n\n" + now);
-        this.openModal = !this.openModal;
-        console.log(response);
-        console.log(body);
-      } catch (error) {
-        window.alert(error.response.data.message + "\n\n" + now);
-        this.openModal = !this.openModal;
-        console.log(error.response.data.message);
-        console.log(body);
-      }
-    },
-
-  
-
+      const response = await axios.post(
+        "http://localhost:8082/orders/add",
+        body,
+        {
+          headers: { Authorization: "Bearer " + this.$auth.getAccessToken() },
+        }
+      );
+      window.alert("Order added with success! \n\n" + now);
+      this.openModal = !this.openModal;
+      console.log(response);
+      console.log(body);
+    } catch (error) {
+      window.alert(error.response.data.message + "\n\n" + now);
+      this.openModal = !this.openModal;
+      console.log(error.response.data.message);
+      console.log(body);
+    }
+  },
 };
 </script>
 

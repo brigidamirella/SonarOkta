@@ -26,6 +26,7 @@
 
       <div class="block w-full overflow-x-auto">
         <table class="w-full border-collapse items-center bg-transparent">
+           <caption></caption>
           <thead>
             <tr>
               <th
@@ -90,7 +91,7 @@
               <td
                 class="align-center whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-xs"
               >
-                <b class="fas fa-arrow-up mr-4 text-emerald-500"></b>
+               <strong class="fas fa-arrow-up mr-4 text-blue-500"></strong>
                 {{ listar.price }}
               </td>
               <td
