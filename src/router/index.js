@@ -4,7 +4,6 @@ import HomeComponent from "@/components/Home";
 import LoginComponent from "@/components/Login";
 import ProfileComponent from "@/components/Profile";
 import HistoricoComponent from "@/components/Historico";
-//  import WalletComponent from '@/components/Wallet'
 import AcoesComponent from "@/components/Acoes";
 import OrdersComponent from '@/components/Orders'
 const router = createRouter({
