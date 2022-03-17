@@ -51,10 +51,10 @@ button {
   padding: 1em 2em;
   display: inline-block;
   border: none;
-  border-radius: 10px;
+ 
   font-size: 17px;
   font-weight: 700;
-  color: white;
+ 
   transition: all 0.5s ease-in-out;
   animation: gradient 5s infinite cubic-bezier(0.62, 0.28, 0.23, 0.99) both;
 }
