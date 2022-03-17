@@ -89,14 +89,6 @@
                 <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                   {{ acao.bid_max }}
                 </td>
-
-                <!-- <td class="whitespace-nowrap px-6 py-4">
-                <span
-                  class="inline-flex rounded-full bg-purple-100 px-2 text-xs font-semibold leading-5 text-green-800"
-                >
-                  Active
-                </span>
-              </td> -->
                 <td>
                   <div>
                     <button
@@ -227,8 +219,6 @@
 </template>
 
 <script>
-// import SockJS from "sockjs-client";
-// import Stomp from "webstomp-client";
 import axios from "axios";
 import Wallet from "./Wallet.vue";
 import Orders from "./Orders.vue";

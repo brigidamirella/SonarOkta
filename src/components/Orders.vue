@@ -260,42 +260,43 @@ export default {
         }
       }
     },
-  }, async postOrders() {
-      const body = {
-        id_user: this.id_user,
-        id_stock: this.id,
-        price: this.price,
-        status: 2,
-        stock_name: this.stock_name,
-        stock_symbol: this.stock_symbol,
-        type: this.picked,
-        volume: this.volume,
-      };
-      try {
-        var now = new Date();
+  // }, async postOrders() {
+  //     const body = {
+  //       id_user: this.id_user,
+  //       id_stock: this.id,
+  //       price: this.price,
+  //       status: 2,
+  //       stock_name: this.stock_name,
+  //       stock_symbol: this.stock_symbol,
+  //       type: this.picked,
+  //       volume: this.volume,
+  //     };
+  //     try {
+  //       var now = new Date();
 
-        const response = await axios.post(
-         "http://localhost:8082/orders/add",
-          body,
-          {
-            headers: { Authorization: "Bearer " + this.$auth.getAccessToken() },
-          }
-        );
-        window.alert("Order added with success! \n\n" + now);
-        this.openModal = !this.openModal;
-        console.log(response);
-        console.log(body);
-      } catch (error) {
-        window.alert(error.response.data.message + "\n\n" + now);
-        this.openModal = !this.openModal;
-        console.log(error.response.data.message);
-        console.log(body);
-      }
+  //       const response = await axios.post(
+  //        "http://localhost:8082/orders/add",
+  //         body,
+  //         {
+  //           headers: { Authorization: "Bearer " + this.$auth.getAccessToken() },
+  //         }
+  //       );
+  //       window.alert("Order added with success! \n\n" + now);
+  //       this.openModal = !this.openModal;
+  //       console.log(response);
+  //       console.log(body);
+  //     } catch (error) {
+  //       window.alert(error.response.data.message + "\n\n" + now);
+  //       this.openModal = !this.openModal;
+  //       console.log(error.response.data.message);
+  //       console.log(body);
+  //     }
     },
 
   
 
-};
+
+}
 </script>
 
 <style scoped>
