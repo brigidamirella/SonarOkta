@@ -96,20 +96,20 @@ main {
 h2 {
   font-size: 86px;
   line-height: 10px;
-  font-family: poppinsmedium;
+  font-family:'Times New Roman', Times, serif;
   margin-top: 65px;
   margin-left: 30px;
 }
 h3 {
   font-size: 86px;
   line-height: 10px;
-  font-family: poppinsmedium;
+  font-family:'Times New Roman', Times, serif;
   margin-top: 65px;
   margin-left: 30px;
   color: #9d8fbe;
 }
 span {
-  color: rgb(255, 255, 255);
+  color: rgb(246, 246, 246);
 }
 
 /* p {
