@@ -40,6 +40,7 @@
 
       <div class="block w-full overflow-x-auto">
         <table class="w-full border-collapse items-center bg-transparent">
+           <caption></caption>
           <thead>
             <tr>
               <th
