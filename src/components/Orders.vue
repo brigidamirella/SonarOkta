@@ -326,16 +326,17 @@ td {
 #buttonModal {
   margin: 0 15px;
 }
-/* TAM FONTE DO MODAL */
-h3 {
-  font-size: 18px;
-}
-/* *****dados da modal em negrito */
 #modal2 {
   font-weight: bold;
   font-size: 16px;
 }
-/* 888******animação ao clicar nos botões */
+
+/* TAM FONTE DO MODAL */
+h3 {
+  font-size: 18px;
+}
+
+
 button:active {
   background-color: brown;
   transform: scale(0.9);
