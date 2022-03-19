@@ -29,7 +29,7 @@
 
       <div class="block w-full overflow-x-auto">
         <table class="w-full border-collapse items-center bg-transparent">
-           <caption></caption>
+          <caption></caption>
           <thead>
             <tr>
               <th
@@ -85,7 +85,13 @@
                   <button
                     class="rounded bg-blue-900 py-2 px-4 font-bold text-white hover:bg-blue-700"
                     type="button"
-                    v-on:click="toggleModal()"
+                    @click="
+                      toggleModal(
+                        busca.id,
+                        busca.stock_name,
+                        busca.stock_symbol
+                      )
+                    "
                   >
                     VENDER
                   </button>
@@ -118,78 +124,80 @@
                           </button>
                         </div>
                         <!--body-->
-                         <div class="p-6 space-y-6">
-              <thead  v-for="acao in stocks"
-              :key="acao" >
-                <tr class="text-gray-900">
-                  Name:
-                  {{
-                    acao.stock_name
-                  }}
-                </tr>
-                <tr class="text-gray-900">
-                  Symbol:
-                  {{
-                    acao.stock_symbol
-                  }}
-                </tr>
-              </thead>
-              <thead>
-                <tr>
-                <br />
-                  Volume Order:
-                  <input
-                    v-model="volume"
-                    placeholder=" vol"
-                    style="
-                      width: 70px;
-                    margin-left: 5px;
-                      
-                    "
-                    type="number"
-                    step="1"
-                    min="1"
-                    class="border border-slate-300"
-                  />
-                  <label for=""></label>
-                  <br />
-                  Price: R$
-                  <input
-                    class="border"
-                    v-model="price"
-                    placeholder=" price"
-                    style="
-                      width: 120px;
-                      margin-left: 5px;
-                    "
-                    type="number"
-                    step="1"
-                    min="1"
-                  />
-                  <label for=""></label>
-                </tr>
-              </thead>
-            </div>
+                        <div class="p-6 space-y-6">
+                          <thead>
+                            <tr class="text-gray-900">
+                              Name:
+                              {{
+                                stock_name
+                              }}
+                            </tr>
+                            <tr id="modal" class="text-gray-900">
+                              Symbol:
+                              {{
+                                stock_symbol
+                              }}
+                            </tr>
+                            <tr id="modal" class="text-gray-900">
+                              id:
+                              {{
+                                id
+                              }}
+                            </tr>
+                          </thead>
+                          <thead>
+                            <tr>
+                              <br />
+                              Volume:
+                              <input
+                                v-model="volume"
+                                placeholder=" vol"
+                                style="width: 120px; margin-left: 5px"
+                                type="number"
+                                step="1"
+                                min="1"
+                                class="border border-slate-300"
+                              />
+                              <label for=""></label>
+                              <br />
+                              <br />
+                              Valor: R$
+                              <input
+                                class="border"
+                                v-model="price"
+                                placeholder=" price"
+                                style="width: 120px; margin-left: 5px"
+                                type="number"
+                                step="1"
+                                min="1"
+                              />
+                              <label for=""></label>
+                            </tr>
+                          </thead>
+                        </div>
                         <!--footer-->
+                      
                         <div
                           class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b"
                         >
+                        
                           <button
+                          
+                            v-on:click="toggleModal()"
                             id="buttonModal"
                             class="text-black-500 bg-transparent border border-solid border-blue-900 hover:bg-blue-700 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            v-on:click="toggleModal()"
                           >
                             Close
                           </button>
+                      
                           <button
-                          @click="postOrders"
+                            @click="vender"
                             id="buttonModal"
                             class="rounded bg-blue-900 py-2 px-4 font-bold text-white hover:bg-blue-700 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            v-on:click="toggleModal()"
                           >
-                            SALVAR
+                            VENDER
                           </button>
                         </div>
                       </div>
@@ -217,24 +225,65 @@ export default {
     return {
       user: 0,
       showModal: true,
-       stock_name: "",
+      stock_name: "",
       stock_symbol: "",
       id: "",
       volume: "",
       price: "",
-      picked: "",
-      id_user: 1,
+      id_user: "",
+      email: "",
     };
   },
   created() {
     this.buscaBalances();
     this.toggleModal();
-  
-     
   },
   methods: {
-    async toggleModal() {
+    async vender() {
+      if (this.$root.authenticated) {
+        this.claims = await this.$auth.getUser();
+        const body = {
+          id_user: 5,
+          id_stock: this.id,
+          email: "brigida.macedo@solinftec.com",
+          volume: this.volume,
+          price: this.price,
+          type: 2,
+          stock_name: this.stock_name,
+          stock_symbol: this.stock_symbol,
+          status: 1,
+        };
+        try {
+          var now = new Date();
+
+          const response = await axios.post(
+            "http://localhost:8082/orders/add",
+            body,
+            {
+              headers: {
+                Authorization: "Bearer " + this.$auth.getAccessToken(),
+              },
+            }
+          );
+          window.alert("Order added with success! \n\n" + now);
+          this.showModal = !this.showModal;
+          console.log(response);
+          console.log(body);
+        } catch (error) {
+          window.alert(error.response.data.message + "\n\n" + now);
+          this.showModal = !this.showModal;
+          console.log(error.response.data.message);
+          console.log(body);
+        }
+      }
+    },
+    // pegar name e symbol do selecionado
+    async toggleModal(id, nome, symbol) {
       this.showModal = !this.showModal;
+      this.stock_name = nome;
+      this.stock_symbol = symbol;
+      this.id = id;
+      console.log(id, nome, symbol);
     },
     async buscaBalances() {
       if (this.$root.authenticated) {
@@ -260,43 +309,8 @@ export default {
         }
       }
     },
-  // }, async postOrders() {
-  //     const body = {
-  //       id_user: this.id_user,
-  //       id_stock: this.id,
-  //       price: this.price,
-  //       status: 2,
-  //       stock_name: this.stock_name,
-  //       stock_symbol: this.stock_symbol,
-  //       type: this.picked,
-  //       volume: this.volume,
-  //     };
-  //     try {
-  //       var now = new Date();
-
-  //       const response = await axios.post(
-  //        "http://localhost:8082/orders/add",
-  //         body,
-  //         {
-  //           headers: { Authorization: "Bearer " + this.$auth.getAccessToken() },
-  //         }
-  //       );
-  //       window.alert("Order added with success! \n\n" + now);
-  //       this.openModal = !this.openModal;
-  //       console.log(response);
-  //       console.log(body);
-  //     } catch (error) {
-  //       window.alert(error.response.data.message + "\n\n" + now);
-  //       this.openModal = !this.openModal;
-  //       console.log(error.response.data.message);
-  //       console.log(body);
-  //     }
-    },
-
-  
-
-
-}
+  },
+};
 </script>
 
 <style scoped>
@@ -315,5 +329,15 @@ td {
 /* TAM FONTE DO MODAL */
 h3 {
   font-size: 18px;
+}
+/* dados da modal em negrito */
+#modal {
+  font-weight: bold;
+  font-size: 16px;
+}
+/* animação ao clicar nos botões */
+button:active {
+  background-color: brown;
+  transform: scale(0.9);
 }
 </style>

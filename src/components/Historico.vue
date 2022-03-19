@@ -146,6 +146,13 @@ export default {
           for (var busca of response.data) {
             busca.updated_on = busca.updated_on.split("T")[0];
             busca.created_on = busca.created_on.split("T")[0];
+            busca.price = busca.price.toLocaleString(
+              "pt-br",
+              {
+                style: "currency",
+                currency: "BRL",
+              }
+            );
           }
           this.id_user = response.data;
           console.log("olha pra baixo");
