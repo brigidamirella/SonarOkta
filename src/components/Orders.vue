@@ -132,13 +132,13 @@
                                 stock_name
                               }}
                             </tr>
-                            <tr id="modal" class="text-gray-900">
+                            <tr id="modal2" class="text-gray-900">
                               Symbol:
                               {{
                                 stock_symbol
                               }}
                             </tr>
-                            <tr id="modal" class="text-gray-900">
+                            <tr id="modal2" class="text-gray-900">
                               id:
                               {{
                                 id
@@ -330,12 +330,12 @@ td {
 h3 {
   font-size: 18px;
 }
-/* dados da modal em negrito */
-#modal {
+/* *****dados da modal em negrito */
+#modal2 {
   font-weight: bold;
   font-size: 16px;
 }
-/* animação ao clicar nos botões */
+/* 888******animação ao clicar nos botões */
 button:active {
   background-color: brown;
   transform: scale(0.9);
