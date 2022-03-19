@@ -63,12 +63,13 @@ button {
 button a:hover {
   text-decoration: none;
 }
-/* animação no click do button */
+/* animação ao passar o mouse */
 button:hover {
   background-color: #ac7295;
   animation: gradient 2s infinite;
   transform: scale(1.05);
 }
+/* animação ao clicar */
 button:active {
   animation: gradient 2s infinite;
   transform: scale(0.8);
