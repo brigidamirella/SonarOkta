@@ -126,7 +126,7 @@
                         <!--body-->
                         <div class="p-6 space-y-6">
                           <thead>
-                            <tr class="text-gray-900">
+                            <tr id="modal2" class="text-gray-900">
                               Name:
                               {{
                                 stock_name
@@ -138,12 +138,7 @@
                                 stock_symbol
                               }}
                             </tr>
-                            <tr id="modal2" class="text-gray-900">
-                              id:
-                              {{
-                                id
-                              }}
-                            </tr>
+                           
                           </thead>
                           <thead>
                             <tr>
@@ -245,7 +240,7 @@ export default {
         const body = {
           id_user: 5,
           id_stock: this.id,
-          email: "brigida.macedo@solinftec.com",
+          email: this.claims.email,
           volume: this.volume,
           price: this.price,
           type: 2,
@@ -257,7 +252,7 @@ export default {
           var now = new Date();
 
           const response = await axios.post(
-            "http://localhost:8082/orders/add",
+           `http://localhost:8082/orders?email=${this.claims.email}`,
             body,
             {
               headers: {
@@ -305,7 +300,7 @@ export default {
           console.log("olha pra baixo");
           console.log(this.user);
         } catch (error) {
-          this.ser = `${error}`;
+          this.user = `${error}`;
         }
       }
     },

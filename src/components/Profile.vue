@@ -23,12 +23,7 @@
                 >
                   Stock name
                 </th>
-                <th
-                  scope="col"
-                  class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
-                >
-                  Data/hora
-                </th>
+                
                 <th
                   scope="col"
                   class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
@@ -53,6 +48,12 @@
                 >
                   bidmax
                 </th>
+                <th
+                  scope="col"
+                  class="bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap border border-l-0 border-r-0 border-solid px-6 py-3 text-left align-middle text-xs font-semibold uppercase"
+                >
+                  Data
+                </th>
               </tr>
             </thead>
             <tbody
@@ -73,14 +74,6 @@
                 {{ acao.stock_symbol }}
               </td>
               <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                {{ acao.updated_on }}
-              </td>
-
-              <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                {{ acao.ask_min }}
-              </td>
-
-              <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                 {{ acao.ask_max }}
               </td>
               <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
@@ -89,6 +82,13 @@
               <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                 {{ acao.bid_max }}
               </td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+                {{ acao.ask_min }}
+              </td>
+              <td id="data" class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+                {{ acao.updated_on }}
+              </td>
+
               <td>
                 <div>
                   <button
@@ -135,12 +135,12 @@
                                 stock_symbol
                               }}
                             </tr>
-                            <tr id="modal" class="text-gray-900">
+                            <!-- <tr id="modal" class="text-gray-900">
                               id:
                               {{
                                 id
                               }}
-                            </tr>
+                            </tr> -->
                           </thead>
                           <thead>
                             <tr>
@@ -238,7 +238,7 @@ export default {
       id: "",
       volume: "",
       price: "",
-      id_user: "",
+      id_user: 5,
       email: "",
       // received_messages: [],
       // send_message: null,
@@ -256,7 +256,7 @@ export default {
         const body = {
           id_user: 5,
           id_stock: this.id,
-          email: "brigida.macedo@solinftec.com",
+          email: this.claims.email,
           volume: this.volume,
           price: this.price,
           type: 1,
@@ -268,7 +268,7 @@ export default {
           var now = new Date();
 
           const response = await axios.post(
-            "http://localhost:8082/orders/add",
+           `http://localhost:8082/orders?email=${this.claims.email}`,
             body,
             {
               headers: {
@@ -308,6 +308,34 @@ export default {
           console.log(response.data);
           for (var acao of response.data) {
             acao.updated_on = acao.updated_on.split("T")[0];
+            acao.ask_min = acao.ask_min.toLocaleString(
+              "pt-br",
+              {
+                style: "currency",
+                currency: "BRL",
+              }
+            );
+            acao.ask_max = acao.ask_max.toLocaleString(
+              "pt-br",
+              {
+                style: "currency",
+                currency: "BRL",
+              }
+            );
+            acao.bid_min = acao.bid_min.toLocaleString(
+              "pt-br",
+              {
+                style: "currency",
+                currency: "BRL",
+              }
+            );
+            acao.bid_max = acao.bid_max.toLocaleString(
+              "pt-br",
+              {
+                style: "currency",
+                currency: "BRL",
+              }
+            );
           }
           this.stocks = response.data;
         } catch (error) {
@@ -389,7 +417,7 @@ th {
 }
 /* TAM DA FONTE DOS DADOS DE DENTRO DA TABELA */
 td {
-  font-size: 14px;
+  font-size: 15px;
   margin: 1px;
 }
 /* STOCK SYMBOL E STOCK NAME EM NEGRITO */
@@ -409,6 +437,10 @@ h3 {
 #modal {
   font-weight: bold;
   font-size: 16px;
+}
+#data{
+  font-weight: bold;
+   font-size: 15px;
 }
 /* animação ao clicar nos botões */
 button:active {
