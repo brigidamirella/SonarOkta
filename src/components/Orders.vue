@@ -11,11 +11,11 @@
 
   <div
     class="mx-auto mb-12 mt-24 w-full px-4 xl:mb-0 xl:w-8/12"
-    style="width: 800px; margin-top: -8px; margin-left: 1093px"
+    style="width: 800px; margin-top: -8px; margin-left: 1070px"
   >
     <div
       class="relative mb-6 flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg"
-      style="height: 510px"
+      style="height: 520px"
     >
       <div class="mb-0 rounded-t border-0 px-4 py-3">
         <div class="flex flex-wrap items-center">
@@ -138,7 +138,6 @@
                                 stock_symbol
                               }}
                             </tr>
-                           
                           </thead>
                           <thead>
                             <tr>
@@ -171,13 +170,11 @@
                           </thead>
                         </div>
                         <!--footer-->
-                      
+
                         <div
                           class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b"
                         >
-                        
                           <button
-                          
                             v-on:click="toggleModal()"
                             id="buttonModal"
                             class="text-black-500 bg-transparent border border-solid border-blue-900 hover:bg-blue-700 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -185,7 +182,7 @@
                           >
                             Close
                           </button>
-                      
+
                           <button
                             @click="vender"
                             id="buttonModal"
@@ -252,7 +249,7 @@ export default {
           var now = new Date();
 
           const response = await axios.post(
-           `http://localhost:8082/orders?email=${this.claims.email}`,
+            `http://localhost:8082/orders?email=${this.claims.email}`,
             body,
             {
               headers: {
@@ -330,7 +327,6 @@ td {
 h3 {
   font-size: 18px;
 }
-
 
 button:active {
   background-color: brown;

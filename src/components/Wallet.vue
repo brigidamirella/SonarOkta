@@ -164,8 +164,9 @@ export default {
 /* Config da tabela */
 #wallet {
   width: 800px;
-  margin-top: -820px;
-  margin-left: 1093px;
+  margin-top: -843px;
+  margin-left: 1070px;
+  height: 300px;
 }
 
 .inline-flex {
